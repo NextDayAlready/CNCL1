@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Byte-Sized Business Boost</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1 class="header">
+    <img src="/images/Logo.png">
+    <span>Businesses For You</span>
+</h1>
+
+<h2>For you, near you</h2>
+<h3>Discover local businesses made just for you</h3>
+
+
+<div class="controls">
+    <select id="categoryFilter">
+        <option value="All">All Categories</option>
+        <option value="Food">Food</option>
+        <option value="Retail">Retail</option>
+        <option value="Services">Services</option>
+    </select>
+
+    <button onclick="sortByRating()">⭐ Sort</button>
+    <button onclick="filter24()">⏰ 24H</button>
+    <button onclick="showFavorites()">❤️ Favorites</button>
+    <button onclick="resetView()">🔄 Reset</button>
+</div>
+
+<div id="businessList" class="grid"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
+<!-- this is the suprise me button code -->
+
+<button onclick="randomBusiness()">
+    <img src="/images/diceimg.jpg" alt="Suprise me" width="30">
+    
+</button>
+
+<div id="randomResult"></div>
