@@ -37,5 +37,5 @@ Project Structure
 - diceimg/jpg
 - Logo.png
 
-Contributer Japleen Gujahi, Ritika Ramessar 
+Contributer: Japleen Gujahi, Ritika Ramessar 
   
