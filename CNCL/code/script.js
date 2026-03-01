@@ -1,96 +1,106 @@
-// LOAD DATA OR CREATE DEFAULT
+// data loaded 
 let businesses = JSON.parse(localStorage.getItem("businesses")) || [
     { id: 1, name: "Midnight Cafe", category: "Food", rating: 4.5, reviews: [], deal: "10% off after 10PM", is24: true },
-    { id: 2, name: "Tech Haven", category: "Retail", rating: 4.2, reviews: [], deal: "Free accessory", is24: false },
+    { id: 2, name: "Haven", category: "Retail", rating: 4.2, reviews: [], deal: "Free accessory", is24: false },
     { id: 3, name: "Sparkle Clean", category: "Services", rating: 4.8, reviews: [], deal: "20% off first service", is24: true }
 ];
 
-// SAVE DATA
+let currentList = businesses;
+
+// save data
 function saveData() {
     localStorage.setItem("businesses", JSON.stringify(businesses));
 }
 
-// DISPLAY BUSINESSES
+// display businesses 
 function displayBusinesses(list) {
+    currentList = list;
+
     let container = document.getElementById("businessList");
     container.innerHTML = "";
 
     list.forEach(b => {
+
+        let reviewHTML = "";
+
+        b.reviews.forEach(r => {
+            reviewHTML += `<p>• ${r}</p>`;
+        });
+
         container.innerHTML += `
-            <div>
+            <div class="card">
                 <h3>${b.name}</h3>
                 <p>Category: ${b.category}</p>
                 <p>Rating: ${b.rating.toFixed(1)}</p>
                 <p>Deal: ${b.deal}</p>
-                <p>${b.is24 ? "Open 24 Hours" : ""}</p>
+                <p>${b.is24 ? " Open 24 Hours" : ""}</p>
 
-                <button onclick="addReview(${b.id})">Leave Review</button>
+                <button onclick="addReview(${b.id})">⭐ Review</button>
                 <button onclick="saveFavorite(${b.id})">❤️ Save</button>
+
+                <div>
+                    <h4>Reviews:</h4>
+                    ${reviewHTML || "<p>No reviews yet</p>"}
+                </div>
             </div>
-            <hr>
         `;
     });
 }
 
-// INITIAL DISPLAY
+// intial display
 displayBusinesses(businesses);
 
-// CATEGORY FILTER
 document.getElementById("categoryFilter").addEventListener("change", function() {
-    let category = this.value;
+    const category = this.value;
 
     if (category === "All") {
-        displayBusinesses(businesses);
+        displayBusinesses(businesses); // show all
     } else {
-        let filtered = businesses.filter(b => b.category === category);
+        // filter by category
+        const filtered = businesses.filter(b => b.category === category);
         displayBusinesses(filtered);
     }
 });
 
-// SORT BY RATING
+// sort by rating 
 function sortByRating() {
-    let sorted = [...businesses].sort((a, b) => b.rating - a.rating);
+    let sorted = [...currentList].sort((a, b) => b.rating - a.rating);
     displayBusinesses(sorted);
 }
 
-// 24-HOUR FILTER
+// 24-HOUR filter
 function filter24() {
     let filtered = businesses.filter(b => b.is24);
     displayBusinesses(filtered);
 }
 
-// RESET VIEW
-function resetView() {
-    displayBusinesses(businesses);
-}
-
-// ADD REVIEW + BOT CHECK
+// reset veiw 
 function addReview(id) {
+
     let answer = prompt("What is 3 + 4?");
     if (answer != "7") {
         alert("Bot verification failed");
         return;
     }
 
-    let rating = parseFloat(prompt("Enter rating (1-5):"));
+    let text = prompt("Write a short review:");
 
-    if (isNaN(rating) || rating < 1 || rating > 5) {
-        alert("Invalid rating");
-        return;
-    }
+    if (!text) return;
 
     let business = businesses.find(b => b.id === id);
 
-    business.reviews.push(rating);
-
-    let total = business.reviews.reduce((a, b) => a + b, 0);
-    business.rating = total / business.reviews.length;
+    business.reviews.push(text);
 
     saveData();
     displayBusinesses(businesses);
 }
 
-// SAVE FAVORITE
+
+
+
+
+
+// save favourite 
 function saveFavorite(id) {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
@@ -102,7 +112,7 @@ function saveFavorite(id) {
     alert("Saved!");
 }
 
-// SHOW FAVORITES
+// show favourite 
 function showFavorites() {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
@@ -123,7 +133,7 @@ function displayBusinesses(list) {
                 <p><strong>Category:</strong> ${b.category}</p>
                 <p><strong>Rating:</strong> ${b.rating.toFixed(1)}</p>
                 <p><strong>Deal:</strong> ${b.deal}</p>
-                <p>${b.is24 ? "⏰ Open 24 Hours" : ""}</p>
+                <p>${b.is24 ? " Open 24 Hours" : ""}</p>
 
                 <button onclick="addReview(${b.id})">⭐ Review</button>
                 <button onclick="saveFavorite(${b.id})">❤️ Save</button>
@@ -140,3 +150,4 @@ function randomBusiness() {
 
     document.getElementById("randomResult").innerHTML= chosen.name;
 }
+
