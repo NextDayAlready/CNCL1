@@ -25,4 +25,17 @@ Future improvements
 - veiw reviews
 - features can be tied to personal intrests and be personalized towards the user
 
+Project Structure 
+/CNCL 
+//Vs Code
+- launch.json
+///code
+- CNCL index.html 
+- script.js
+- style.css
+///images
+- diceimg/jpg
+- Logo.png
+
+Contributer Japleen Gujahi, Ritika Ramessar 
   
